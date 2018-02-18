@@ -138,6 +138,7 @@ libmain(int argc, char **argv)
 	thisenv = 0;
   8000e8:	c7 05 20 20 c0 00 00 	movl   $0x0,0xc02020
   8000ef:	00 00 00 
+	
 
 	// save the name of the program so that panic() can use it
 	if (argc > 0)

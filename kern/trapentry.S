@@ -46,26 +46,24 @@
 /*
  * Lab 3: Your code here for generating entry points for the different traps.
  */
-	
-	TRAPHANDLER_NOEC(trap_divide, T_DIVIDE)
-	TRAPHANDLER_NOEC(trap_debug, T_DEBUG)
-	TRAPHANDLER_NOEC(trap_nmi, T_NMI)
-	TRAPHANDLER_NOEC(trap_brkpt, T_BRKPT)
-	TRAPHANDLER_NOEC(trap_oflow, T_OFLOW)
-	TRAPHANDLER_NOEC(trap_bound, T_BOUND)
-	TRAPHANDLER_NOEC(trap_illop, T_ILLOP)
-	TRAPHANDLER_NOEC(trap_device, T_DEVICE)
-	TRAPHANDLER(trap_dblflt, T_DBLFLT)
-	TRAPHANDLER(trap_tss, T_TSS)
-	TRAPHANDLER(trap_segnp, T_SEGNP)
-	TRAPHANDLER(trap_stack, T_STACK)
-	TRAPHANDLER(trap_gpflt, T_GPFLT)
-	TRAPHANDLER(trap_pgflt, T_PGFLT)
-	TRAPHANDLER_NOEC(trap_fperr, T_FPERR)
-	TRAPHANDLER(trap_align, T_ALIGN)
-	TRAPHANDLER_NOEC(trap_mchk, T_MCHK)
-	TRAPHANDLER_NOEC(trap_simderr, T_SIMDERR)
 
+	TRAPHANDLER_NOEC(th0, 0)
+	TRAPHANDLER_NOEC(th1, 1)
+	TRAPHANDLER_NOEC(th3, 3)
+	TRAPHANDLER_NOEC(th4, 4)
+	TRAPHANDLER_NOEC(th5, 5)
+	TRAPHANDLER_NOEC(th6, 6)
+	TRAPHANDLER_NOEC(th7, 7)
+	TRAPHANDLER(th8, 8)
+	TRAPHANDLER_NOEC(th9, 9)
+	TRAPHANDLER(th10, 10)
+	TRAPHANDLER(th11, 11)
+	TRAPHANDLER(th12, 12)
+	TRAPHANDLER(th13, 13)
+	TRAPHANDLER(th14, 14)
+	TRAPHANDLER_NOEC(th16, 16)
+	
+	
 
 /*
  * Lab 3: Your code here for _alltraps
@@ -81,3 +79,6 @@ _alltraps:
 	popl %es
 	pushl %esp
 	call trap
+
+
+
