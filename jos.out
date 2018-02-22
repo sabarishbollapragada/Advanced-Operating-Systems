@@ -2,66 +2,51 @@
 + mk obj/kern/kernel.img
 6828 decimal is XXX octal!
 Physical memory: 66556K available, base = 640K, extended = 65532K
-boot_alloc memory at f017d000
-Next memory at f017e000
 boot_alloc memory at f017e000
-Next memory at f019f000
+Next memory at f017f000
+boot_alloc memory at f017f000
+Next memory at f01a0000
 npages: 16639
 npages_basemem: 160
-pages: f017e000
-boot_alloc memory at f019f000
-Next memory at f01b7000
-f01b7000
-med=439
-boot_alloc memory at f01b7000
-Next memory at f01b7000
+pages: f017f000
+boot_alloc memory at f01a0000
+Next memory at f01b8000
+f01b8000
+med=440
+boot_alloc memory at f01b8000
+Next memory at f01b8000
 check_page_free_list done
 check_page_alloc() succeeded!
 so far so good
-pp2 f017ffe8
-kern_pgdir f017d000
+pp2 f0180fe8
+kern_pgdir f017e000
 kern_pgdir[0] is 3ff007
 check_page() succeeded!
-Virtual Address ef000000 mapped to Physical Address 17e000
-PADDR(pages) 17e000
-Virtual Address eec00000 mapped to Physical Address 19f000
-Virtual Address efff8000 mapped to Physical Address 110000
-PADDR(bootstack) 110000
+Virtual Address ef000000 mapped to Physical Address 17f000
+PADDR(pages) 17f000
+Virtual Address eec00000 mapped to Physical Address 1a0000
+Virtual Address efff8000 mapped to Physical Address 111000
+PADDR(bootstack) 111000
 Virtual Address f0000000 mapped to Physical Address 0
 check_kern_pgdir() succeeded!
-boot_alloc memory at f01b7000
-Next memory at f01b7000
+boot_alloc memory at f01b8000
+Next memory at f01b8000
 check_page_free_list done
 check_page_installed_pgdir() succeeded!
-envs: f019f000, e: f019f000, e->env_id: 1000
+envs: f01a0000, e: f01a0000, e->env_id: 1000
 env_id, 1000
 [00000000] new env 00001000
-p_memsz: 3d3f, p_filesz: 3d3f
-p_memsz: 1014, p_filesz: 1014
+p_memsz: 3d3e, p_filesz: 3d3e
+p_memsz: 1034, p_filesz: 1034
 p_memsz: 8, p_filesz: 4
 
 Incoming TRAP frame at 0xefffffbc
-TRAP frame at 0xf019f000
-  edi  0x00000000
-  esi  0x00000000
-  ebp  0xeebfdfd0
-  oesp 0xefffffdc
-  ebx  0x00000000
-  edx  0x00000000
-  ecx  0x00000000
-  eax  0x00000000
-  es   0x----0023
-  ds   0x----0023
-  trap 0x0000000e Page Fault
-  cr2  0x00000000
-  err  0x00000006 [user, write, not-present]
-  eip  0x00800036
-  cs   0x----001b
-  flag 0x00000082
-  esp  0xeebfdfd0
-  ss   0x----0023
+
+Incoming TRAP frame at 0xefffffbc
+user_mem_check va: f010000c, len: 64
+[00001000] user_mem_check assertion failure for va f010000c
 [00001000] free env 00001000
 Destroyed the only environment - nothing more to do!
 Welcome to the JOS kernel monitor!
 Type 'help' for a list of commands.
-qemu: terminating on signal 15 from pid 4778
+qemu: terminating on signal 15 from pid 16141
