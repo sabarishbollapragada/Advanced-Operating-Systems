@@ -481,15 +481,15 @@ env_destroy(struct Env *e)
 void
 env_pop_tf(struct Trapframe *tf)
 {
-<<<<<<< HEAD
+//<<<<<<< HEAD
 	// Record the CPU we are running on for user-space debugging
 	curenv->env_cpunum = cpunum();
 
 	asm volatile(
 		"\tmovl %0,%%esp\n"
-=======
-	__asm __volatile("movl %0,%%esp\n"
->>>>>>> lab3
+//=======
+	//__asm __volatile("movl %0,%%esp\n"
+//>>>>>>> lab3
 		"\tpopal\n"
 		"\tpopl %%es\n"
 		"\tpopl %%ds\n"
