@@ -76,25 +76,33 @@ duppage(envid_t envid, unsigned pn)
      int r;
      uint32_t perm = PTE_P | PTE_COW | PTE_U;
      void * addr = (void *)(pn*PGSIZE);
+     
+     //LAB 5: Your code here.
+     if (uvpt[pn] & PTE_SHARE) 
+     {  
+	sys_page_map(thisenv->env_id, addr, envid, addr, uvpt[pn]&PTE_SYSCALL);
+     }
+     
 
-     // LAB 4: Your code here.
-    //If the page passed is marked copy-on-write or writable 
-     if (uvpt[pn] & PTE_COW || uvpt[pn] & PTE_W) 
+      // LAB 4: Your code here.
+     //If the page passed is marked copy-on-write or writable 
+     else if (uvpt[pn] & PTE_COW || uvpt[pn] & PTE_W)  //0X800
      {
-     //then map the page at addr in parent to child at addr in its address space with perm COW
-     if ((r = sys_page_map(thisenv->env_id, addr, envid, addr, perm)) < 0)
+        //then map the page at addr in parent to child at addr in its address space with perm COW
+        if ((r = sys_page_map(thisenv->env_id, addr, envid, addr, perm)) < 0)
+        panic("duppage: sys_page_map: %e\n", r);
+
+        // remap the page at addr in parent with perm that contains COW
+        if ((r = sys_page_map(thisenv->env_id, addr, thisenv->env_id, addr, perm)) < 0)
+        panic("duppage: sys_page_map: %e\n", r);
+
+     } 
+     else // if the page is read-only , map this addr of the page too in the child 
+     if((r = sys_page_map(thisenv->env_id, addr, envid, addr,PTE_P | PTE_U )) < 0)
      panic("duppage: sys_page_map: %e\n", r);
 
-     // remap the page at addr in parent with perm that contains COW
-     if ((r = sys_page_map(thisenv->env_id, addr, thisenv->env_id, addr, perm)) < 0)
-     panic("duppage: sys_page_map: %e\n", r);
+     return 0;
 
-    } 
-    else // if the page is read-only , map this addr of the page too in the child 
-    if((r = sys_page_map(thisenv->env_id, addr, envid, addr,PTE_P | PTE_U )) < 0)
-    panic("duppage: sys_page_map: %e\n", r);
-
-    return 0;
 }
 
 //
@@ -120,7 +128,7 @@ fork(void)
 	//panic("fork not implemented");
         envid_t child_envid;
         int r;
-        set_pgfault_handler(pgfault); 							// set the pagefault handler to pgfault which is defined above  
+        set_pgfault_handler(pgfault); // set the pagefault handler to pgfault which is defined above  
 
         // Allocate a new child environment.
         // The kernel will initialize it with a copy of our register state,
