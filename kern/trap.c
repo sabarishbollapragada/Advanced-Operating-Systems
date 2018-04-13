@@ -290,18 +290,30 @@ trap_dispatch(struct Trapframe *tf)
 	// Handle clock interrupts. Don't forget to acknowledge the
 	// interrupt using lapic_eoi() before calling the scheduler!
 	// LAB 4: Your code here.
-<<<<<<< HEAD
 
-	// Handle keyboard and serial interrupts.
-	// LAB 5: Your code here.
 
-=======
+	
+
+
 	if (tf->tf_trapno == IRQ_OFFSET + IRQ_TIMER) {
 		lapic_eoi();
 		sched_yield();
 		return;
 	}
->>>>>>> lab4
+	// Handle keyboard and serial interrupts.
+	// LAB 5: Your code here.
+	if (tf->tf_trapno==IRQ_OFFSET + IRQ_KBD):
+		{
+			kbd_intr();
+			return;
+		}
+		
+	if (tf->tf_trapno==IRQ_OFFSET + IRQ_SERIAL):
+		{
+			serial_intr();
+			return;
+	}
+
 	// Unexpected trap: The user process or the kernel has a bug.
 	print_trapframe(tf);
 	if (tf->tf_cs == GD_KT)
@@ -417,7 +429,7 @@ page_fault_handler(struct Trapframe *tf)
 	//   user_mem_assert() and env_run() are useful here.
 	//   To change what the user environment runs, modify 'curenv->env_tf'
 	//   (the 'tf' variable points at 'curenv->env_tf').
-	/*if (curenv->env_pgfault_upcall == NULL)
+	if (curenv->env_pgfault_upcall == NULL)
 	{
 	cprintf("[%08x] user fault va %08x ip %08x\n",
 		curenv->env_id, fault_va, tf->tf_eip);
@@ -453,7 +465,7 @@ page_fault_handler(struct Trapframe *tf)
 
 	
 	
-}*/
+}
 
 
 

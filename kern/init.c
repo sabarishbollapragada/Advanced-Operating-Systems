@@ -56,16 +56,16 @@ lock_kernel();
 	boot_aps();
 
 	// Start fs.
-	ENV_CREATE(fs_fs, ENV_TYPE_FS);
+	//ENV_CREATE(fs_fs, ENV_TYPE_FS);
 
 #if defined(TEST)
 	// Don't touch -- used by grading script!
 	ENV_CREATE(TEST, ENV_TYPE_USER);
 #else
 	// Touch all you want.
-<<<<<<< HEAD
+
 	ENV_CREATE(user_icode, ENV_TYPE_USER);
-=======
+
 	ENV_CREATE(user_primes, ENV_TYPE_USER);
 	//ENV_CREATE(user_yield, ENV_TYPE_USER);
 	//ENV_CREATE(user_yield, ENV_TYPE_USER);
@@ -79,7 +79,7 @@ lock_kernel();
       //ENV_CREATE(user_faultallocbad, ENV_TYPE_USER);
       //ENV_CREATE(user_faultnostack, ENV_TYPE_USER);
       //ENV_CREATE(user_forktree, ENV_TYPE_USER);
->>>>>>> lab4
+
 #endif // TEST*
 
 	// Should not be necessary - drains keyboard because interrupt has given up.

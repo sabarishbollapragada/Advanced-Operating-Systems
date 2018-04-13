@@ -74,13 +74,20 @@ static int
 duppage(envid_t envid, unsigned pn)
 {
      int r;
-     uint32_t perm = PTE_P | PTE_COW | PTE_U;
+     uint32_t perm = PTE_P | PTE_U;
      void * addr = (void *)(pn*PGSIZE);
 
      // LAB 4: Your code here.
     //If the page passed is marked copy-on-write or writable 
+    if(uvpt[pn] & PTE_SHARE){
+		perm = uvpt[pn] & PTE_SYSCALL;
+	if ((r = sys_page_map(0, addr, envid, addr, perm)) < 0)
+		    panic("sys_page_map: %e", r);
+		return 0;
+	}
     if (uvpt[pn] & PTE_COW || uvpt[pn] & PTE_W) 
      {
+	perm |= PTE_COW;
      //then map the page at addr in parent to child at addr in its address space with perm COW
      if ((r = sys_page_map(thisenv->env_id, addr, envid, addr, perm)) < 0)
      panic("duppage: sys_page_map: %e\n", r);
