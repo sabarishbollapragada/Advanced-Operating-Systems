@@ -124,5 +124,21 @@ sys_time_msec(void)
 	return (unsigned int) syscall(SYS_time_msec, 0, 0, 0, 0, 0, 0);
 }
 
+//Ex 7: transmit packet system call
+int sys_net_transmit(void *addr, size_t length)
+{
+	return (int) syscall(SYS_net_transmit, 0, (uint32_t)addr, (uint32_t)length, 0, 0, 0);
+}
 
+int sys_net_receive(void *addr)
+{
+	return (int) syscall(SYS_net_receive,0,(uint32_t)addr, 0,0,0,0);
+}
+//Challenge
+void
+sys_net_get_mac(uint8_t * mac_address)
+{
+syscall(SYS_net_get_mac, 0, (uint32_t)mac_address, 0, 0, 0, 0);
+ return;
+}
 

@@ -12,6 +12,7 @@
 #include <kern/console.h>
 #include <kern/sched.h>
 #include <kern/time.h>
+#include <kern/e1000.h>
 
 // Print a string to the system console.
 // The string is exactly 'len' characters long.
@@ -490,13 +491,37 @@ sys_ipc_recv(void *dstva)
 	
 }
 
-// Return the current time.
+// Ex 1 : Return the current time.
 static int
 sys_time_msec(void)
 {
 	// LAB 6: Your code here.
-	panic("sys_time_msec not implemented");
+
+	return time_msec();
+	//panic("sys_time_msec not implemented");
 }
+
+// Ex 7: Sys call - Transmit a network packet
+int sys_net_transmit(void *addr, size_t length)
+{
+	 user_mem_assert(curenv, addr, length, PTE_U);
+	 return transmit_packet(addr, length);
+}
+
+int
+sys_net_receive(void * addr)
+{
+ user_mem_assert(curenv, addr, E1000_RXPKT_MAX, PTE_U);
+ return receive_packet(addr);
+}
+
+// Get network MAC address
+static void
+sys_net_get_mac(uint8_t* mac_address){
+ user_mem_assert(curenv, mac_address, 6, PTE_U | PTE_W);
+ read_mac_address(mac_address);
+}
+
 
 // Dispatches to the correct kernel function, passing the arguments.
 int32_t
@@ -539,6 +564,19 @@ switch (syscallno)
          
           case SYS_env_set_trapframe:
 			return (int32_t)sys_env_set_trapframe(a1, (void*) a2);
+	case SYS_time_msec:
+	return (int32_t)sys_time_msec();
+
+	case SYS_net_transmit:
+	return (int32_t)sys_net_transmit((void *)a1, (size_t)a2);
+	
+	case SYS_net_receive:
+	return (int32_t)sys_net_receive((void *)a1);
+	
+        case SYS_net_get_mac:
+	   sys_net_get_mac((uint8_t *)a1);
+	   return 0; 
+
  	   default:
              return -E_INVAL;     
 	} 
